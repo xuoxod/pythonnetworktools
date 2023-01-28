@@ -7,12 +7,12 @@ print_routing_table()
 
 results = whohas("192.168.12.0/24")
 
-status = results['status']
+status = results["status"]
 
 if status:
-    clients = results['clients']
-    
-    print(*clients,sep="\n")
+    clients = results["clients"]
+
+    print(*clients, sep="\n")
 else:
-    reason = results['reason']
+    reason = results["reason"]
     print("{}\n".format(reason))

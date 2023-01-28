@@ -8,9 +8,8 @@ cus = cms["custom"]
 """ Private Addresses """
 
 
-def who_has_a():
+def who_has_a(target="10.0.0.0/8"):
     destination = "ff:ff:ff:ff:ff:ff"
-    target = "10.0.0.0/8"
     verbose = 0
     timeout = 2
     results = None
@@ -34,9 +33,8 @@ def who_has_a():
     return {"status": False, "reason": "Could not detect any devices on the network"}
 
 
-def who_has_b():
+def who_has_b(target="172.16.0.0/16"):
     destination = "ff:ff:ff:ff:ff:ff"
-    target = "172.16.0.0/16"
     verbose = 0
     timeout = 2
     results = None

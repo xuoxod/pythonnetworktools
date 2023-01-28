@@ -2,6 +2,7 @@
 
 from custom_modules.RouteInfo import print_routing_table
 from custom_modules.Arper import who_has_c as whohas
+from custom_modules.PacketSniffer import send_tcp_packet as send_tpa
 
 print_routing_table()
 
@@ -16,3 +17,5 @@ if status:
 else:
     reason = results["reason"]
     print("{}\n".format(reason))
+
+send_tpa()

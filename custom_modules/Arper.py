@@ -7,6 +7,7 @@ cus = cms["custom"]
 
 """ Private Addresses """
 
+
 def who_has_a():
     destination = "ff:ff:ff:ff:ff:ff"
     target = "10.0.0.0/8"
@@ -31,6 +32,7 @@ def who_has_a():
         }
 
     return {"status": False, "reason": "Could not detect any devices on the network"}
+
 
 def who_has_b():
     destination = "ff:ff:ff:ff:ff:ff"
@@ -57,9 +59,9 @@ def who_has_b():
 
     return {"status": False, "reason": "Could not detect any devices on the network"}
 
-def who_has_c():
+
+def who_has_c(target="192.168.0.0/24"):
     destination = "ff:ff:ff:ff:ff:ff"
-    target = "192.168.0.0/24"
     verbose = 0
     timeout = 2
     results = None
@@ -67,7 +69,7 @@ def who_has_c():
 
     packet = Ether(dst=destination) / ARP(pdst=target)
 
-    results = srp(packet, timeout=timeout, vebose=verbose)[0]
+    results = srp(packet, timeout=timeout, verbose=verbose)[0]
 
     if not results == None:
         for sent, recv in results:

@@ -108,11 +108,6 @@ def week_of_year():
 def time_stamp():
     return "{}:{}:{}".format(hour(), minute(), second())
 
-
-def numbered_date_stamp():
-    return "{}/{}/{}".format(year(), nmonth(), nweekday())
-
-
 def numbered_date_stamp():
     return "{}/{}/{}".format(year(), nmonth(), nweekday())
 
@@ -127,6 +122,12 @@ def named_date_stamp():
 
 def named_date_stamp_f():
     return "{}/{}/{}".format(nweekday(), month(), year())
+
+
+def numbered_date_time_stamp():
+    return "{}/{}/{},{}:{}:{}".format(
+        year(), nmonth(), nweekday(), hour(), minute(), second()
+    )
 
 
 def make_directory(dir_path=None):

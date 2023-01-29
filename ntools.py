@@ -9,7 +9,7 @@ from custom_modules.MyLogger import create_log as log
 cus = cms["custom"]
 desc = "Perform network tasks"
 epil = "Scans hosts and display route info"
-vers = "%prog 0.1"
+vers = lambda: print("ntools 0.1")
 app_log_dir_name = "ntools"
 app_error_log_name = "ntools-errors.log"
 app_log_name = "ntools-logs.log"
@@ -33,3 +33,19 @@ def error_handler(*args):
 
 
 parser = argparse.ArgumentParser(description=desc, epilog=epil)
+parser.error = error_handler
+
+# Display app version
+version = parser.add_mutually_exclusive_group()
+version.add_argument(
+    "-v",
+    "--version",
+    dest="version",
+    action="store_true",
+    help="Print version to stdout",
+)
+
+args = parser.parse_args()
+
+if args.version:
+    vers()

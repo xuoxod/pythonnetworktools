@@ -111,3 +111,27 @@ def time_stamp():
 
 def numbered_date_stamp():
     return "{}/{}/{}".format(year(), nmonth(), nweekday())
+
+
+def numbered_date_stamp():
+    return "{}/{}/{}".format(year(), nmonth(), nweekday())
+
+
+def numbered_date_stamp_f():
+    return "{}/{}/{}".format(nweekday(), nmonth(), year())
+
+
+def named_date_stamp():
+    return "{}/{}/{}".format(year(), month(), nweekday())
+
+
+def named_date_stamp_f():
+    return "{}/{}/{}".format(nweekday(), month(), year())
+
+
+def make_directory(dir_path=None):
+    if not dir_path == None:
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)
+            return os.path.exists(dir_path)
+    return False

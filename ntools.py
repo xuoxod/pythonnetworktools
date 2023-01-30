@@ -4,11 +4,17 @@ import argparse
 from custom_modules.Utils import exit_prog
 from custom_modules.PlatformConstants import LINE_SEP as lsep
 from custom_modules.ConsoleMessenger import CONSOLE_MESSENGER_SWITCH as cms
+from custom_modules.IPPatterns import (
+    valid_ipv4 as vip4,
+    valid_network_range as vna,
+    is_port_number as port,
+    is_port_range as prange,
+)
 from custom_modules.MyLogger import create_log as log
 
 cus = cms["custom"]
 desc = "Perform network tasks"
-epil = "Scans hosts and display route info"
+epil = "Light weight network tasks"
 app_log_dir_name = "ntools"
 app_error_log_name = "ntools-errors.log"
 app_log_name = "ntools-logs.log"
@@ -34,6 +40,7 @@ def error_handler(*args):
 def print_version():
     print("ntools 0.1")
     log("ntools: printed version", app_log_dir_name, app_log_name)
+    exit_prog()
 
 
 parser = argparse.ArgumentParser(description=desc, epilog=epil)
@@ -46,10 +53,51 @@ version.add_argument(
     "--version",
     dest="version",
     action="store_true",
-    help="Print version to stdout",
+    help="print version and exit",
 )
+
+# Arp who has
+who_has = parser.add_argument_group("ARP who has","Detect hosts on the network")
+who_has.add_argument(
+    "-t",
+    "--type",
+    dest="type",
+    type=int,
+    choices=range(1, 4),
+    help="Network type: 1=Class A, 2=Class B, 3=Class C",
+)
+who_has.add_argument("-l", "--lan", dest="lan", type=str, help="Single address or CIDR")
 
 args = parser.parse_args()
 
 if args.version:
     print_version()
+
+elif args.lan:
+    address = args.lan
+    mask = "c"
+
+    if not vip4(address) and not vna(address):
+        e_header = cus(255, 122, 122, "Error:")
+        e_body = cus(
+            255,
+            255,
+            255,
+            "Expecting a valid IP address or CIDR but received {}".format(address),
+        )
+        e_msg = "{}\t{}".format(e_header, e_body)
+        print("{}\n".format(e_msg))
+        exit_prog()
+
+    if args.type:
+        type = args.type
+        if type == 1:
+            mask = "a"
+        elif type == 2:
+            mask = "b"
+        else:
+            mask = "c"
+    else:
+        mask = "c"
+
+    print("who has:\taddress: {} type: {}".format(address, mask))

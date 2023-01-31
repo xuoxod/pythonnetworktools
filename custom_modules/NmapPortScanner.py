@@ -9,8 +9,8 @@ cus = cms["custom"]
 def scan_host_port(host, port):
     print("Scanning host {} on port {}".format(host, port))
     nm_scanner = nmap.PortScanner()
-    nm_scanner.scan(host, str(port))
-    return nm_scanner
+    nm_scanner_results = nm_scanner.scan(host, str(port))
+    return nm_scanner_results
 
 
 def scan_network_hosts_port(network, port):
@@ -85,7 +85,7 @@ def handle_results(results):
 
     for ip in scan:
         address = ip
-        print("Host:\t\t{}:".format(address))
+        print("       Host:\t\t{}:".format(address))
 
         hostnames = scan[address]["hostnames"][0]
         name = hostnames["name"]
@@ -98,11 +98,11 @@ def handle_results(results):
             tcp = scan[address]['tcp']
             
         if name:
-            print("  Host name:\t\t{}".format(name))
-        print("  Host Type:\t\t{}".format(type))
+            print("       Name:\t\t{}".format(name))
+        print("       Type:\t\t{}".format(type))
         if vendor:
             print("     Vendor:\t\t{}".format(vendor))
-        print("Host status:\t\t{}".format(status))
+        print("     Status:\t\t{}".format(status))
         print("Reason Type:\t\t{}".format(response_type))
         if tcp:
             for p in tcp:
@@ -115,22 +115,22 @@ def handle_results(results):
                 conf = tcp[port]['conf']
                 cpe = tcp[port]['cpe']
                 print("       Port:\t\t{}".format(p))
-                print("                  Conf:\t\t{}".format(conf))
+                print("           Conf:\t\t{}".format(conf))
                 
                 if cpe:
-                    print("                   CPE:\t\t{}".format(cpe))
+                    print("            CPE:\t\t{}".format(cpe))
                     
-                print("                 State:\t\t{}".format(port_state))
-                print("                  Name:\t\t{}".format(port_name))
+                print("          State:\t\t{}".format(port_state))
+                print("           Name:\t\t{}".format(port_name))
                 
                 if extrainfo:
-                    print("            Extra Info:\t\t{}".format(extrainfo))
+                    print("     Extra Info:\t\t{}".format(extrainfo))
                 
                 if product:
-                    print("               Product:\t\t{}".format(product))
+                    print("        Product:\t\t{}".format(product))
                     
                 if product_version:
-                    print("               Version:\t\t{}".format(product_version))
+                    print("        Version:\t\t{}".format(product_version))
                 print("\n")
         print("\n")
 

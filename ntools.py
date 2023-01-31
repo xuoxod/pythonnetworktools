@@ -103,7 +103,7 @@ args = parser.parse_args()
 if args.version:
     print_version()
 
-elif args.lan:
+if args.lan:
     address = args.lan
     mask = "c"
 
@@ -129,10 +129,19 @@ elif args.lan:
             mask = "c"
     else:
         mask = "c"
-
     print("who has:\taddress: {} type: {}".format(address, mask))
+    exit_prog()
 
-elif args.scan:
+if args.route:
+    print("show route info")
+    exit_prog()
+if args.ip:
+    print("show IP address")
+    exit_prog()
+if args.name:
+    print("show network interface name")
+    exit_prog()
+if args.scan:
     address = args.scan[0]
     hport = "1-1025"
 
@@ -156,3 +165,4 @@ elif args.scan:
             hport = args.hport[0]
 
     print("Scanning {} port(s) {}".format(address, hport))
+    exit_prog()

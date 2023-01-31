@@ -99,7 +99,8 @@ def handle_results(results):
             
         if name:
             print("       Name:\t\t{}".format(name))
-        print("       Type:\t\t{}".format(type))
+        if type:
+            print("       Type:\t\t{}".format(type))
         if vendor:
             print("     Vendor:\t\t{}".format(vendor))
         print("     Status:\t\t{}".format(status))

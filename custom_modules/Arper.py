@@ -81,3 +81,21 @@ def who_has_c(target="192.168.0.0/24"):
         }
 
     return {"status": False, "reason": "Could not detect any devices on the network"}
+
+
+def who_has(target, mask):
+    results = None
+    if mask == "a":
+        results = who_has_a(target)
+    if mask == "b":
+        results = who_has_b(target)
+    if mask == "c":
+        results = who_has_c(target)
+    if not results == None:
+        status = results["status"]
+        if status:
+            clients = results["clients"]
+            print(*clients, sep="\n")
+        else:
+            reason = results["reason"]
+            print("{}\n".format(reason))

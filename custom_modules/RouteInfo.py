@@ -28,6 +28,15 @@ def print_network_interface_name():
     print("{}".format(iface))
 
 
+def get_ip_address():
+    return conf.route.route()[1]
+
+
+def print_ip_address():
+    ip = conf.route.route()[1]
+    print("{}".format(ip))
+
+
 def get_network_interface_hardware_address():
     return get_if_hwaddr(conf.iface)
 

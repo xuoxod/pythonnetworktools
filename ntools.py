@@ -11,6 +11,18 @@ from custom_modules.IPPatterns import (
     is_port_range as prange,
 )
 from custom_modules.MyLogger import create_log as log
+from custom_modules.Arper import who_has as whohas
+from custom_modules.RouteInfo import (
+    print_routing_table,
+    print_network_interface_hardware_address,
+    print_network_interface_name,
+    print_ip_address,
+)
+from custom_modules.NmapPortScanner import (
+    scan_host_port,
+    scan_network_hosts_port,
+    handle_results as rhandler,
+)
 
 cus = cms["custom"]
 desc = "Perform network tasks"
@@ -83,6 +95,13 @@ route_info.add_argument(
     action="store_true",
     help="show network interface name and exit",
 )
+route_info.add_argument(
+    "-m",
+    "--mac",
+    dest="mac",
+    action="store_true",
+    help="show network interface MAC address and exit",
+)
 
 # Scan port(s)
 scan_host = parser.add_argument_group("Port scanning", "scan single host or network")
@@ -130,16 +149,24 @@ if args.lan:
     else:
         mask = "c"
     print("who has:\taddress: {} type: {}".format(address, mask))
+    whohas(address, mask)
     exit_prog()
 
 if args.route:
     print("show route info")
+    print_routing_table()
     exit_prog()
 if args.ip:
     print("show IP address")
+    print_ip_address()
     exit_prog()
 if args.name:
     print("show network interface name")
+    print_network_interface_name()
+    exit_prog()
+if args.mac:
+    print("show MAC address")
+    print_network_interface_hardware_address()
     exit_prog()
 if args.scan:
     address = args.scan[0]
@@ -162,4 +189,8 @@ if args.scan:
             hport = args.hport[0]
 
     print("Scanning {} port(s) {}".format(address, hport))
+    if vip4(address):
+        rhandler(scan_host_port(address, hport))
+    elif vna(address):
+        rhandler(scan_network_hosts_port(address, hport))
     exit_prog()

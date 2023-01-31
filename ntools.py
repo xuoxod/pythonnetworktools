@@ -68,6 +68,22 @@ who_has.add_argument(
 )
 who_has.add_argument("-l", "--lan", dest="lan", type=str, help="expects an IP or CIDR")
 
+# Route info
+route_info = parser.add_argument_group("Route info", "IP, gateway info")
+route_info.add_argument(
+    "-r", "--route", dest="route", action="store_true", help="show route info and exit"
+)
+route_info.add_argument(
+    "-i", "--ip", dest="ip", action="store_true", help="show IP address and exit"
+)
+route_info.add_argument(
+    "-n",
+    "--name",
+    dest="name",
+    action="store_true",
+    help="show network interface name and exit",
+)
+
 # Scan port(s)
 scan_host = parser.add_argument_group("Port scanning", "scan single host or network")
 scan_host.add_argument(

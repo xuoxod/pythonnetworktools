@@ -147,9 +147,6 @@ if args.scan:
 
     if args.hport:
         _port = args.hport[0]
-
-        # TODO: validate proper port range
-
         if not port(_port) and not prange(_port):
             e_header = cus(255, 122, 122, "Error:")
             e_body = cus(

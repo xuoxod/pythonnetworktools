@@ -82,7 +82,7 @@ def handle_results(results):
     print("  Elapsed Time:\t\t{}".format(scan_elapsed_time))
     print("Hosts Detected:\t\t{}".format(detected_hosts_count))
     print("-" * 100)
-
+   
     for ip in scan:
         address = ip
         print("       Host:\t\t{}:".format(address))
@@ -104,6 +104,7 @@ def handle_results(results):
             print("     Vendor:\t\t{}".format(vendor))
         print("     Status:\t\t{}".format(status))
         print("Reason Type:\t\t{}".format(response_type))
+                        
         if tcp:
             for p in tcp:
                 port = p

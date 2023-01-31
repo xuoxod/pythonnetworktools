@@ -68,14 +68,23 @@ def is_port_range(arg=None):
     if not arg == None:
         pattern = re.compile(r"^(([0-9]+)(\-))([0-9]+)|((\,)([0-9]+))+")
         matched = re.search(pattern, arg)
+        arg_split = arg.split("-")
+        sport = arg_split[0]
+        eport = arg_split[1]
 
         try:
+            valid_range = int(sport) < int(eport)
             assert not matched == None
-            return True, matched
+            assert valid_range == True
+            return True
         except AssertionError as ae:
             msg = cus(255, 255, 255, "{}".format(ae))
             print("{}\n".format(msg))
-            return False, None
+            return False
+        except ValueError as ve:
+            msg = cus(255, 255, 255, "{}".format(ve))
+            print("{}\n".format(msg))
+            return False
 
 
 def is_port_number(arg):
@@ -83,6 +92,6 @@ def is_port_number(arg):
     matched = re.search(pattern, arg)
     try:
         assert not matched == None
-        return True, matched
+        return True
     except AssertionError as ae:
-        return False, None
+        return False

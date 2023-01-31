@@ -57,16 +57,30 @@ version.add_argument(
 )
 
 # Arp who has
-who_has = parser.add_argument_group("ARP who has","Detect hosts on the network")
+who_has = parser.add_argument_group("ARP who has", "detect hosts on the network")
 who_has.add_argument(
     "-t",
     "--type",
     dest="type",
     type=int,
     choices=range(1, 4),
-    help="Network type: 1=Class A, 2=Class B, 3=Class C",
+    help="network type: 1=Class A, 2=Class B, 3=Class C",
 )
-who_has.add_argument("-l", "--lan", dest="lan", type=str, help="Single address or CIDR")
+who_has.add_argument("-l", "--lan", dest="lan", type=str, help="expects an IP or CIDR")
+
+# Scan port(s)
+scan_host = parser.add_argument_group("Port scanning", "scan single host or network")
+scan_host.add_argument(
+    "-s", "--scan", dest="scan", nargs=1, help="expects an IP or CIDR"
+)
+scan_host.add_argument(
+    "-p",
+    "--hport",
+    dest="hport",
+    nargs=1,
+    help="expects an integer or range: e.g. 22, 1-2048.",
+)
+
 
 args = parser.parse_args()
 
@@ -101,3 +115,28 @@ elif args.lan:
         mask = "c"
 
     print("who has:\taddress: {} type: {}".format(address, mask))
+
+elif args.scan:
+    address = args.scan[0]
+    hport = "1-1025"
+
+    if args.hport:
+        _port = args.hport[0]
+
+        # TODO: validate proper port range
+
+        if not port(_port) and not prange(_port):
+            e_header = cus(255, 122, 122, "Error:")
+            e_body = cus(
+                255,
+                255,
+                255,
+                "Expecting a valid port number or range. e.g. 22, 1-2048.",
+            )
+            e_msg = "{}\t{}".format(e_header, e_body)
+            print("{}\n".format(e_msg))
+            exit_prog()
+        else:
+            hport = args.hport[0]
+
+    print("Scanning {} port(s) {}".format(address, hport))

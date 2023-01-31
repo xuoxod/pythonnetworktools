@@ -9,7 +9,7 @@ cus = cms["custom"]
 def scan_host_port(host, port):
     print("Scanning host {} on port {}".format(host, port))
     nm_scanner = nmap.PortScanner()
-    nm_scanner.scan(host, str(port))
+    nm_scanner.scan(host, str(port), arguments="sP")
     return nm_scanner
 
 
@@ -98,7 +98,6 @@ def handle_results(results):
 
     if results.csv:
         csv = results.csv"""
-
 
     if not results == None:
         all_hosts = results.all_hosts()
